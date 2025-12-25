@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const ProductList = () => {
   const [products,setProducts] = useState([]);
@@ -9,6 +10,9 @@ const ProductList = () => {
       .then((data) => setProducts(data))
       .catch((err) => console.log(err)) 
   },[])
+
+  const navigate = useNavigate();
+
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Products</h2>
@@ -35,8 +39,8 @@ const ProductList = () => {
                 ₹{product.price}
               </span>
 
-              <button className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                View
+              <button   onClick={() => navigate(`/product/${product.id}`)}  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                Buy now
               </button>
             </div>
           </div>
