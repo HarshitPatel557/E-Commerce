@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Cart,CartItem
+from .models import Cart,CartItem, Order, OrderItem
 from products.models import Product
 from .serializers import CartSerializer
 
@@ -47,3 +47,34 @@ def update_quantity(request):
     item.save()
 
     return Response({"message": "Quantity updated"})
+
+
+
+@api_view(['POST'])
+def checkout(request):
+    cart = get_cart()
+    items = cart.items.all()
+    
+    if not items:
+        return Response({'error':"Cart is empty"},status=400)
+    
+    total = 0
+    for item in items:
+        total += item.product.price * item.quantity
+    
+    order = Order.objects.create(total_price=total)
+    
+    for item in items:
+        OrderItem.objects.create(
+            order=order,
+            product=item.product,
+            quantity=item.quantity
+            price=item.product.price
+        )
+        
+    items.delete()
+
+    return Response({
+        "message":"Order placed Successfully",
+        "order_id": order.id
+    })
