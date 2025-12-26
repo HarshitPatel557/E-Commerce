@@ -45,9 +45,19 @@ const ProductDetail = () => {
             Category: {product.category.name}
           </p>
 
-          <button className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+          <button
+            onClick={() => {
+              fetch("http://127.0.0.1:8000/api/cart/add/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ product_id: product.id })
+              }).then(() => alert("Added to cart"));
+            }}
+            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
+          >
             Add to Cart
           </button>
+
         </div>
       </div>
     </div>
