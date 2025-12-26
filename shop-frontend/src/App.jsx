@@ -1,8 +1,8 @@
 import './App.css'
 import ProductList from './components/ProductList'
-import ProductDetail from './components/ProductDetail'
-import Cart from './components/Cart';
-import { Router,Routes,Route } from 'react-router-dom';
+import ProductDetail from './pages/ProductDetail'
+import Cart from './pages/Cart';
+import { Routes,Route } from 'react-router-dom';
 
 function App() {
 

@@ -24,8 +24,8 @@ const Cart = () => {
     };
 
     if (!cart) return <p>Loading...</p>
-    console.log(cart)
-  return (
+
+    return (
     <div className="max-w-3xl mx-auto bg-white p-6 shadow rounded">
       <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
 
