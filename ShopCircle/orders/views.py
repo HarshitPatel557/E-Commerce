@@ -16,7 +16,7 @@ def get_cart():
 @api_view(['GET'])
 def cart_detail(request):
     cart = get_cart()
-    serializer = CartSerializer
+    serializer = CartSerializer(cart)
     return Response(serializer.data)
 
 @api_view(['POST'])
