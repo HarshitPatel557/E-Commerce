@@ -2,13 +2,24 @@ import React, { useEffect, useState } from 'react'
 
 const Cart = () => {
   const [cart,setCart] = useState(null);
+  const [total, setTotal] = useState(0);
 
   const fetchCart=()=>{
       fetch("http://127.0.0.1:8000/api/cart/")
         .then((res)=>res.json())
-        .then((data)=>setCart(data))
-        // .catch((err)=>console.log(err))
-    };
+        .then((data)=>{
+          setCart(data)
+
+          console.log(data.items)
+          let totalAmount = 0;
+          data.items.forEach((item) => {
+            totalAmount += item.product.price * item.quantity;
+        });
+        setTotal(totalAmount.toFixed(2));
+
+        })
+      };
+      
 
     useEffect(()=>{
         fetchCart();
@@ -53,6 +64,19 @@ const Cart = () => {
           </div>
         </div>
       ))}
+
+      {/* Total Price */}
+      <p className="text-lg mb-4">
+        <strong>Total Price:</strong> ${total}
+      </p>
+
+      <button
+        onClick={() => window.location.href = "/checkout"}
+        className="mt-6 w-full bg-blue-600 text-white py-2 rounded"
+      >
+        Proceed to Checkout
+      </button>
+
     </div>
   )
 }

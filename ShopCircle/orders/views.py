@@ -68,13 +68,13 @@ def checkout(request):
         OrderItem.objects.create(
             order=order,
             product=item.product,
-            quantity=item.quantity
-            price=item.product.price
+            quantity=item.quantity,
+            price=item.product.price,
         )
         
     items.delete()
 
     return Response({
         "message":"Order placed Successfully",
-        "order_id": order.id
+        "order_id": order.id,
     })
