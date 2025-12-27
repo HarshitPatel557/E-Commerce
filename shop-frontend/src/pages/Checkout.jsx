@@ -54,7 +54,7 @@ const Checkout = ({total}) => {
       <button
         onClick={placeOrder}
         className="w-full py-3 mt-4 rounded-xl text-white font-semibold text-lg
-                  bg-gradient-to-r from-emerald-500 to-teal-600 
+                  bg-linear-to-r from-emerald-500 to-teal-600 
                   shadow-md hover:shadow-lg hover:scale-[1.02] transition"
       >
         Place Order ✔

@@ -38,7 +38,7 @@ function App() {
   
   return (
     <>
-      <div className="bg-gradient-to-br from-teal-50 via-cyan-50 to-emerald-50">
+      <div className="bg-linear-to-br from-teal-50 via-cyan-50 to-emerald-50">
         <Navbar cartCount={ cartCount } />
 
         <main className="p-6">

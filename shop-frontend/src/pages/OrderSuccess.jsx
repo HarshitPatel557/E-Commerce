@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const OrderSuccess = ({total}) => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   return (
     <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-md p-10 rounded-3xl shadow-2xl border border-teal-100 mt-16 text-center">
