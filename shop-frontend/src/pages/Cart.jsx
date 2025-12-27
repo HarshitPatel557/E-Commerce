@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-const Cart = ({refreshCart}) => {
-  const [cart,setCart] = useState(null);
-
-  const fetchCart=()=>{
-    fetch("http://127.0.0.1:8000/api/cart/")
-      .then((res)=>res.json())
-      .then((data)=>{
-        setCart(data)
-      })
-    };
+const Cart = ({cart, refreshCart, total}) => {
 
   useEffect(()=>{
-      fetchCart();
+      refreshCart();
   },[]);
 
   const updateQuantity=(item_id,quantity)=>{
@@ -22,7 +13,7 @@ const Cart = ({refreshCart}) => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ item_id, quantity })
-      }).then(fetchCart);
+      }).then(refreshCart);
 
     } else {
       // Remove item from cart
@@ -31,7 +22,7 @@ const Cart = ({refreshCart}) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ item_id })
       }).then(()=>{
-        fetchCart();
+        // fetchCart();
         refreshCart();
       });
     }
@@ -40,54 +31,79 @@ const Cart = ({refreshCart}) => {
   
   if (!cart) return <p>Loading...</p>
 
-  const total = cart.items.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
+
 
 
   return (
-  <div className="max-w-3xl mx-auto bg-white p-6 shadow rounded">
-    <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+    <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-md p-8 shadow-xl rounded-3xl border border-teal-100 mt-10">
 
-    {cart.items.length === 0 && <p>Cart is empty</p>}
+      {/* Header */}
+      <h2 className="text-3xl font-bold text-teal-900 mb-6 flex items-center gap-2">
+        🛒 Your Cart
+      </h2>
 
-    {cart.items.map((item) => (
-      <div key={item.id} className="flex justify-between items-center border-b py-3">
-        <div>
-          <p className="font-semibold">{item.product.name}</p>
-          <p className="text-sm text-gray-500">₹{item.product.price}</p>
+      {/* Empty Cart */}
+      {cart.items.length === 0 && (
+        <p className="text-teal-700 font-medium text-center py-6">
+          Your cart is empty.
+        </p>
+      )}
+
+      {/* Cart Items */}
+      {cart.items.map((item) => (
+        <div
+          key={item.id}
+          className="flex justify-between items-center py-4 border-b border-teal-100"
+        >
+          {/* Product Info */}
+          <div>
+            <p className="font-semibold text-teal-900 text-lg">{item.product.name}</p>
+            <p className="text-emerald-700 font-medium">₹{item.product.price}</p>
+          </div>
+
+          {/* Quantity Controls */}
+          <div className="flex items-center gap-3">
+
+            <button
+              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+              className="w-8 h-8 flex items-center justify-center bg-teal-100 text-teal-800 
+                        rounded-lg hover:bg-teal-200 transition"
+            >
+              −
+            </button>
+
+            <span className="font-semibold text-teal-900">{item.quantity}</span>
+
+            <button
+              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+              className="w-8 h-8 flex items-center justify-center bg-teal-100 text-teal-800 
+                        rounded-lg hover:bg-teal-200 transition"
+            >
+              +
+            </button>
+          </div>
         </div>
+      ))}
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-            className="px-2 bg-gray-200"
-          >−</button>
-
-          <span>{item.quantity}</span>
-
-          <button
-            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-            className="px-2 bg-gray-200"
-          >+</button>
-        </div>
+      {/* Total Price */}
+      <div className="mt-6 text-right">
+        <p className="text-2xl font-bold text-emerald-700">
+          Total: ₹{total}
+        </p>
       </div>
-    ))}
 
-    {/* Total Price */}
-    <p className="text-lg mb-4">
-      <strong>Total Price:</strong> ${total}
-    </p>
+      {/* Checkout Button */}
+      <button
+        onClick={() => window.location.href = "/checkout"}
+        className="mt-8 w-full py-3 rounded-xl text-white font-semibold text-lg 
+                  bg-gradient-to-r from-emerald-500 to-teal-600 
+                  shadow-md hover:shadow-lg hover:scale-[1.02] transition"
+      >
+        Proceed to Checkout
+      </button>
 
-    <button
-      onClick={() => window.location.href = "/checkout"}
-      className="mt-6 w-full bg-blue-600 text-white py-2 rounded"
-    >
-      Proceed to Checkout
-    </button>
+    </div>
 
-  </div>
   )
 }
 

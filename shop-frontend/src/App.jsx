@@ -9,34 +9,48 @@ import Navbar from './components/Navbar';
 import { useEffect, useState } from 'react';
 
 function App() {
-
+  
   const [cartCount,setCartCount] = useState(0);
+  const [cart,setCart] = useState(null);
 
   const fetchCartCount=()=>{
     fetch("http://127.0.0.1:8000/api/cart/")
       .then(res=>res.json())
-      .then(data=>setCartCount(data.items.length));
+      .then(data=>{
+        setCartCount(data.items.length)
+        setCart(data)
+      });
   };
+
+  
 
   useEffect(()=>{
     fetchCartCount();
-  },[cartCount])
-  console.log(cartCount)
+  },[])
+
+  if (!cart) return <p>Loading...</p>
+
+  const total = (cart.items.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  )).toFixed(2);
+
+  
   return (
     <>
-    <div className="min-h-screen bg-gray-100">
-      <Navbar cartCount={ cartCount } />
+      <div className="bg-gradient-to-br from-teal-50 via-cyan-50 to-emerald-50">
+        <Navbar cartCount={ cartCount } />
 
-      <main className="p-6">
-        <Routes>
-          <Route path="/" element={<ProductList refreshCart={fetchCartCount} />} />
-          <Route path="/product/:id" element={<ProductDetail refreshCart={fetchCartCount} />} />
-          <Route path="/cart" element={<Cart refreshCart={fetchCartCount} />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/order-success/:id" element={<OrderSuccess />} />
-        </Routes>
-      </main>
-    </div>
+        <main className="p-6">
+          <Routes>
+            <Route path="/" element={<ProductList refreshCart={fetchCartCount} />} />
+            <Route path="/product/:id" element={<ProductDetail refreshCart={fetchCartCount} />} />
+            <Route path="/cart" element={<Cart refreshCart={fetchCartCount} cart={cart} total={total}/>} />
+            <Route path="/checkout" element={<Checkout total={total} />} />
+            <Route path="/order-success/:id" element={<OrderSuccess total={total} />} />
+          </Routes>
+        </main>
+      </div>
     </>
   )
 }
