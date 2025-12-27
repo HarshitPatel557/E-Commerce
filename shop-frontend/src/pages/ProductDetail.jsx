@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
-const ProductDetail = () => {
+const ProductDetail = ({refreshCart}) => {
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -51,11 +51,14 @@ const ProductDetail = () => {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ product_id: product.id })
-              }).then(() => alert("Added to cart"));
+              }).then(() => {
+                refreshCart();
+                alert("Added to cart")
+              });
             }}
             className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700"
           >
-            Add to Cart
+            Add to Cart 🛒
           </button>
 
         </div>

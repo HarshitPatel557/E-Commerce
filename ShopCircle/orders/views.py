@@ -50,6 +50,23 @@ def update_quantity(request):
 
 
 
+@api_view(["POST"])
+def delete_cart_item(request):
+    item_id = request.data.get("item_id")
+
+    if not item_id:
+        return Response({"error": "item_id is required"})
+
+    try:
+        item = CartItem.objects.get(id=item_id)
+        item.delete()
+        return Response({"message": "Item removed from cart"})
+
+    except CartItem.DoesNotExist:
+        return Response({"error": "Item not found"})
+
+
+
 @api_view(['POST'])
 def checkout(request):
     cart = get_cart()
