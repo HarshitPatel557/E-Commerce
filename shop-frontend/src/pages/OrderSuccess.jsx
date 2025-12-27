@@ -7,7 +7,7 @@ const OrderSuccess = ({total}) => {
     <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-md p-10 rounded-3xl shadow-2xl border border-teal-100 mt-16 text-center">
 
       {/* Success Icon */}
-      <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-emerald-500 to-teal-600 flex items-center justify-center shadow-xl">
+      <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-linear-to-r from-emerald-500 to-teal-600 flex items-center justify-center shadow-xl">
         <span className="text-white text-5xl">✔</span>
       </div>
 
@@ -75,7 +75,7 @@ const OrderSuccess = ({total}) => {
         {/* Continue Shopping */}
         <button
           onClick={() => navigate("/")}
-          className="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r 
+          className="px-6 py-3 rounded-xl font-semibold text-white bg-linear-to-r 
                     from-emerald-500 to-teal-600 shadow-lg hover:scale-[1.03] transition"
         >
           Continue Shopping 🛍

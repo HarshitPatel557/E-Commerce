@@ -96,7 +96,7 @@ const Cart = ({cart, refreshCart, total}) => {
       <button
         onClick={() => window.location.href = "/checkout"}
         className="mt-8 w-full py-3 rounded-xl text-white font-semibold text-lg 
-                  bg-gradient-to-r from-emerald-500 to-teal-600 
+                  bg-linear-to-r from-emerald-500 to-teal-600 
                   shadow-md hover:shadow-lg hover:scale-[1.02] transition"
       >
         Proceed to Checkout

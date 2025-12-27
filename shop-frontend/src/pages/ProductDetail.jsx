@@ -86,7 +86,7 @@ const ProductDetail = ({refreshCart}) => {
                   alert("Added to cart");
                 });
               }}
-              className="bg-gradient-to-r from-emerald-500 to-teal-600 
+              className="bg-linear-to-r from-emerald-500 to-teal-600 
                         text-white px-6 py-3 rounded-xl font-semibold 
                         hover:scale-[1.03] transition shadow-md hover:shadow-lg"
             >
@@ -139,7 +139,7 @@ const ProductDetail = ({refreshCart}) => {
             placeholder="Write your review..."
           ></textarea>
 
-          <button className="mt-3 bg-gradient-to-r from-emerald-500 to-teal-600 
+          <button className="mt-3 bg-linear-to-r from-emerald-500 to-teal-600 
                             text-white px-6 py-2 rounded-xl shadow hover:scale-[1.02] transition">
             Submit Review
           </button>

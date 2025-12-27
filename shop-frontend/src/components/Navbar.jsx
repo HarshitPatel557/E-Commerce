@@ -12,7 +12,7 @@ const Navbar = ({cartCount}) => {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-teal-100 via-cyan-100 to-emerald-100 px-10 py-5 flex justify-between items-center rounded-b-3xl shadow-md">
+    <nav className="bg-linear-to-r from-teal-100 via-cyan-100 to-emerald-100 px-10 py-5 flex justify-between items-center rounded-b-3xl shadow-md">
       <Link to="/" className="text-3xl font-bold text-teal-900">
         ShopCircle
       </Link>
