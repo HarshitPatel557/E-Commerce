@@ -1,5 +1,5 @@
 import './App.css'
-import ProductList from './components/ProductList'
+import ProductList from './pages/ProductList'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
@@ -7,6 +7,9 @@ import OrderSuccess from './pages/OrderSuccess';
 import { Routes,Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import { useEffect, useState } from 'react';
+import { OrbitProgress } from "react-loading-indicators";
+
+
 
 function App() {
   
@@ -28,7 +31,7 @@ function App() {
     fetchCartCount();
   },[])
 
-  if (!cart) return <p>Loading...</p>
+  if (!cart) return <p><OrbitProgress variant="dotted" dense color="#6de9a4" size="medium" text="" textColor="" /></p>
 
   const total = (cart.items.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
