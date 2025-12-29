@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { getToken } from '../utils/auth';
 
 const Cart = ({cart, refreshCart, total}) => {
 
@@ -11,7 +12,10 @@ const Cart = ({cart, refreshCart, total}) => {
       // Normal quantity update
       fetch("http://127.0.0.1:8000/api/cart/update/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
         body: JSON.stringify({ item_id, quantity })
       }).then(refreshCart);
 
@@ -19,7 +23,10 @@ const Cart = ({cart, refreshCart, total}) => {
       // Remove item from cart
       fetch(`http://127.0.0.1:8000/api/cart/delete/`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
         body: JSON.stringify({ item_id })
       }).then(()=>{
         // fetchCart();

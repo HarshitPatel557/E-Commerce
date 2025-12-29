@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { removeToken, isAuthenticated } from "../utils/auth";
+
 
 const Navbar = ({cartCount}) => {
 
@@ -22,13 +24,14 @@ const Navbar = ({cartCount}) => {
 
   // Auto-search when debounced value updates
   useEffect(() => {
+    if (location.pathname !== "/") return; // 🔥 block redirect on other pages
+
     if (debouncedValue) {
       navigate(`/?search=${debouncedValue}`);
     } else {
       navigate(`/`);
     }
-  }, [debouncedValue, navigate]);
-
+  }, [debouncedValue, navigate, location.pathname]);
 
   const handleSearch = () => {
     const trimmed = query.trim();
@@ -65,7 +68,7 @@ const Navbar = ({cartCount}) => {
           onChange={(e) => setQuery(e.target.value)}
         /> */}
 
-              {/* Search Bar */}
+      {/* Search Bar */}
       <div className="flex items-center bg-white border border-emerald-300 shadow-sm rounded-xl px-4 py-2">
         <input
           type="text"
@@ -110,6 +113,26 @@ const Navbar = ({cartCount}) => {
           )}
         </Link>
       </div>
+      {isAuthenticated() ? (
+        <button 
+          onClick={() => {
+            removeToken();
+            window.location.href = "/login";
+          }}
+          className="bg-linear-to-r from-pink-200 to-red-100 text-red-600 
+                    px-4 py-2 rounded-xl shadow-md hover:shadow-lg 
+                    hover:scale-[1.03] transition-all duration-300"
+        >
+          Logout
+        </button>
+      ) : (
+        <button className='bg-linear-to-r from-emerald-500 to-teal-300 text-white 
+                    px-4 py-2 rounded-xl shadow-md hover:shadow-lg 
+                    hover:scale-[1.03] transition-all duration-300'>
+          <Link to="/login">Login</Link>
+        </button>
+      )}
+
     </nav>
 
   )
