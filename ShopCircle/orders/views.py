@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,permission_classes
 from .models import Cart,CartItem, Order, OrderItem
 from products.models import Product
 from .serializers import CartSerializer
+from rest_framework.permissions import IsAuthenticated
+
 
 # Create your views here.
 
@@ -14,6 +16,7 @@ def get_cart():
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def cart_detail(request):
     cart = get_cart()
     serializer = CartSerializer(cart)
