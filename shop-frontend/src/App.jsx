@@ -12,7 +12,7 @@ import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
 import { getToken } from "./utils/auth";
 import Footer from './components/Footer';
-
+import Register from './pages/Register';
 
 
 function App() {
@@ -71,6 +71,7 @@ function App() {
         <main className="p-6">
           <Routes>
             <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
             <Route path="/" element={<ProductList refreshCart={fetchCartCount} />} />
             <Route path="/product/:id" element={<ProductDetail refreshCart={fetchCartCount} />} />
             <Route path="/cart" element={ <PrivateRoute> <Cart refreshCart={fetchCartCount} cart={cart} total={total}/> </PrivateRoute> } />
