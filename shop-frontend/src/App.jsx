@@ -10,13 +10,13 @@ import { useEffect, useState } from 'react';
 import { OrbitProgress } from "react-loading-indicators";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
-import { getToken } from "./utils/auth";
+import { getToken, removeToken } from "./utils/auth";
 import Footer from './components/Footer';
 import Register from './pages/Register';
 
 
 function App() {
-  
+
   const [cartCount,setCartCount] = useState(0);
   const [cart,setCart] = useState(null);
 

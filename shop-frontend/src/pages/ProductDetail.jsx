@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import { getToken } from '../utils/auth';
 
 const ProductDetail = ({refreshCart}) => {
 
@@ -79,7 +80,10 @@ const ProductDetail = ({refreshCart}) => {
               onClick={() => {
                 fetch("http://127.0.0.1:8000/api/cart/add/", {
                   method: "POST",
-                  headers: { "Content-Type": "application/json" },
+                  headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${getToken()}`,
+                  },
                   body: JSON.stringify({ product_id: product.id })
                 }).then(() => {
                   refreshCart();

@@ -16,7 +16,8 @@ const Register = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = () => {
+  const handleRegister = (e) => {
+    e.preventDefault();
     setError("");
 
     fetch("http://127.0.0.1:8000/api/auth/register/", {
@@ -59,11 +60,12 @@ const Register = () => {
             {error}
           </p>
         )}
-        <form action="">
+        <form onSubmit={handleRegister} >
         <input
           className="w-full mb-4 p-3 border border-gray-300 rounded bg-white/70 focus:ring-2 focus:ring-teal-500 outline-none"
           placeholder="Username"
           name="username"
+          autoComplete="username"
           value={form.username}
           onChange={handleChange}
         />
@@ -73,6 +75,7 @@ const Register = () => {
           className="w-full mb-4 p-3 border border-gray-300 rounded bg-white/70 focus:ring-2 focus:ring-teal-500 outline-none"
           placeholder="Email"
           name="email"
+          autoComplete="email"
           value={form.email}
           onChange={handleChange}
         />
@@ -82,12 +85,13 @@ const Register = () => {
           className="w-full mb-6 p-3 border border-gray-300 rounded bg-white/70 focus:ring-2 focus:ring-teal-500 outline-none"
           placeholder="Password"
           name="password"
+          autoComplete="new-password"
           value={form.password}
           onChange={handleChange}
         />
 
         <button
-          onClick={handleRegister}
+          type="submit"
           className="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 rounded font-semibold transition"
         >
           Create Account

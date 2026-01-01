@@ -3,30 +3,35 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from .models import Cart,CartItem, Order, OrderItem
 from products.models import Product
-from .serializers import CartSerializer
+from .serializers import CartSerializer, OrderSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
 
 
-def get_cart():
-    cart,created = Cart.objects.get_or_create(id=1)
+def get_cart(user):
+    cart,created = Cart.objects.get_or_create(user=user)
     return cart
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def cart_detail(request):
-    cart = get_cart()
+    cart = get_cart(request.user)
     serializer = CartSerializer(cart)
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def add_to_cart(request):
-    cart = get_cart()
+    cart = get_cart(request.user)
     product_id = request.data.get('product_id')
-    product = Product.objects.get(id=product_id)
+    
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        return Response({"error": "Product not found"})
     
     item, created = CartItem.objects.get_or_create(
         cart=cart,
@@ -41,19 +46,25 @@ def add_to_cart(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def update_quantity(request):
     item_id = request.data.get('item_id')
     quantity = request.data.get('quantity')
 
-    item = CartItem.objects.get(id=item_id)
-    item.quantity = quantity
-    item.save()
+    item = CartItem.objects.get(id=item_id, cart__user=request.user)
+    
+    if quantity <=0:
+        item.delete()
+    else:
+        item.quantity = quantity
+        item.save()
 
     return Response({"message": "Quantity updated"})
 
 
 
 @api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def delete_cart_item(request):
     item_id = request.data.get("item_id")
 
@@ -71,18 +82,17 @@ def delete_cart_item(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def checkout(request):
-    cart = get_cart()
+    cart = get_cart(request.user)
     items = cart.items.all()
     
     if not items:
         return Response({'error':"Cart is empty"},status=400)
     
-    total = 0
-    for item in items:
-        total += item.product.price * item.quantity
+    total = sum(item.product.price * item.quantity for item in items)
     
-    order = Order.objects.create(total_price=total)
+    order = Order.objects.create(user=request.user, total_price=total)
     
     for item in items:
         OrderItem.objects.create(
@@ -98,3 +108,10 @@ def checkout(request):
         "message":"Order placed Successfully",
         "order_id": order.id,
     })
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def my_orders(request):
+    orders = Order.objects.filter(user=request.user)
+    serializer = OrderSerializer(orders, many=True)
+    return Response(serializer.data)

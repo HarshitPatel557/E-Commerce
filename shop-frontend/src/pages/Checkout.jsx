@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getToken } from '../utils/auth';
 
 const Checkout = ({total}) => {
 
@@ -8,6 +9,10 @@ const Checkout = ({total}) => {
   const placeOrder=()=>{
     fetch("http://127.0.0.1:8000/api/checkout/",{
         method:"POST",
+        headers: { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getToken()}`,
+        },
     }).then(res=>res.json())
       .then(data=>{
         alert("Order placed Successfully!");
