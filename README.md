@@ -8,7 +8,7 @@ This project includes a comprehensive roadmap, fully documented folder structure
 
 ---
 
-## 🚀 Features
+## 🚀 Features-
 
 ### **Core E-Commerce**
 
@@ -74,7 +74,6 @@ This project includes a comprehensive roadmap, fully documented folder structure
 docs/
 README.md
 ```
-
 ---
 
 ## 🗂️ Database Schema (High-Level)
