@@ -16,7 +16,7 @@ import Register from './pages/Register';
 
 
 function App() {
-
+  
   const [cartCount,setCartCount] = useState(0);
   const [cart,setCart] = useState(null);
 
@@ -73,6 +73,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path="/" element={<ProductList refreshCart={fetchCartCount} />} />
             <Route path="/product/:id" element={<ProductDetail refreshCart={fetchCartCount} />} />
+            
             <Route path="/cart" element={ <PrivateRoute> <Cart refreshCart={fetchCartCount} cart={cart} total={total}/> </PrivateRoute> } />
             <Route path="/checkout" element={ <PrivateRoute> <Checkout total={total} /> </PrivateRoute> } />
             <Route path="/order-success/:id" element={ <PrivateRoute> <OrderSuccess total={total} /> </PrivateRoute> } />
