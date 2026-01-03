@@ -4,10 +4,6 @@ export const getToken = () => {
 
 export const setToken = (token) => {
   localStorage.setItem("accessToken", token);
-  setTimeout(()=>{
-    removeToken();
-    alert('Session Expired Login again')
-  },15*60*1000);
 };
 
 export const removeToken = () => {

@@ -13,6 +13,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import { getToken, removeToken } from "./utils/auth";
 import Footer from './components/Footer';
 import Register from './pages/Register';
+import Profile from "./pages/Profile";
+
 
 
 function App() {
@@ -74,6 +76,7 @@ function App() {
             <Route path="/" element={<ProductList refreshCart={fetchCartCount} />} />
             <Route path="/product/:id" element={<ProductDetail refreshCart={fetchCartCount} />} />
             
+            <Route path='/profile' element={ <PrivateRoute> <Profile /> </PrivateRoute> } />
             <Route path="/cart" element={ <PrivateRoute> <Cart refreshCart={fetchCartCount} cart={cart} total={total}/> </PrivateRoute> } />
             <Route path="/checkout" element={ <PrivateRoute> <Checkout total={total} /> </PrivateRoute> } />
             <Route path="/order-success/:id" element={ <PrivateRoute> <OrderSuccess total={total} /> </PrivateRoute> } />

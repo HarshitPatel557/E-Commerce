@@ -42,11 +42,12 @@ const ProductList = () => {
       <HeroSlider />
       {filtered.length ===0 && ( <p className="text-gray-500">No Product Found...</p> )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filtered.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+
     </div>
   );
 };
