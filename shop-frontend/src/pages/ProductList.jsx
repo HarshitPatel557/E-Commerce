@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
+import HeroSlider from "../components/HeroSlider";
 
 
 const ProductList = () => {
@@ -36,15 +37,17 @@ const ProductList = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Products {searchQuery && ` - Results for "${searchQuery}"`}</h2>
+      {/* <h2 className="text-xl font-semibold mb-4">Products {searchQuery && ` - Results for "${searchQuery}"`}</h2> */}
 
+      <HeroSlider />
       {filtered.length ===0 && ( <p className="text-gray-500">No Product Found...</p> )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filtered.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+
     </div>
   );
 };

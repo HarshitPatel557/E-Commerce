@@ -6,45 +6,50 @@ const ProductCard = ({ product }) => {
 
   return (
     <div
-      key={product.id}
-      className="relative p-5 rounded-3xl bg-white shadow-md border border-teal-100 
-                hover:shadow-emerald-200 hover:-translate-y-2 transition-all duration-300 group"
+      className="group bg-white rounded-2xl border border-emerald-100 
+                 shadow-sm hover:shadow-lg 
+                 transition-all duration-300 
+                 hover:-translate-y-1 overflow-hidden"
     >
-
-      {/* Product Image */}
-      <div className="overflow-hidden rounded-2xl">
+      {/* Image */}
+      <div className="relative bg-linear-to-br from-teal-50 to-emerald-50 
+                      aspect-square p-3 flex items-center justify-center">
         <img
           src={product.image_url || "https://via.placeholder.com/300"}
           alt={product.name}
-          className="h-48 w-full object-cover rounded-2xl transform 
-                    group-hover:scale-105 transition-all duration-300"
+          className="max-h-full max-w-full object-contain 
+                     group-hover:scale-105 transition-transform"
         />
       </div>
 
-      {/* Product Title */}
-      <h3 className="text-xl font-semibold text-teal-900 mt-3">
-        {product.name}
-      </h3>
+      {/* Content */}
+      <div className="p-4 space-y-1.4">
 
-      {/* Description */}
-      <p className="text-teal-800/70 text-sm mt-1 line-clamp-2">
-        {product.description}
-      </p>
+        {/* Title */}
+        <h3 className="text-lg font-semibold text-teal-900 line-clamp-1">
+          {product.name}
+        </h3>
 
-      {/* Price + Button */}
-      <div className="flex justify-between items-center mt-4">
-        <span className="text-2xl font-bold text-emerald-700">
-          ₹{product.price}
-        </span>
+        {/* Description */}
+        <p className="text-sm text-teal-700/70 line-clamp-2">
+          {product.description}
+        </p>
 
-        <button
-          onClick={() => navigate(`/product/${product.id}`)}
-          className="bg-linear-to-r from-emerald-500 to-teal-600 text-white 
-                    px-4 py-2 rounded-xl shadow-md hover:shadow-lg 
-                    hover:scale-[1.03] transition-all duration-300"
-        >
-          Buy Now
-        </button>
+        {/* Price + Button */}
+        <div className="flex items-center justify-between pt-2">
+          <span className="text-lg font-bold text-emerald-700">
+            ₹{product.price}
+          </span>
+
+          <button
+            onClick={() => navigate(`/product/${product.id}`)}
+            className="bg-linear-to-r from-emerald-500 to-teal-600 
+                       text-white text-xs px-3 py-1.5 rounded-lg 
+                       hover:scale-105 transition"
+          >
+            View
+          </button>
+        </div>
       </div>
     </div>
   );

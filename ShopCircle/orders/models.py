@@ -1,12 +1,18 @@
 from django.db import models
 from products.models import Product
+# from django.contrib.auth.models import User
+from django.conf import settings
 # Create your models here.
 
+User = settings.AUTH_USER_MODEL
+
+
 class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Cart {self.id}"
+        return f"{self.user}'s Cart"
     
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart,related_name="items",on_delete=models.CASCADE)
@@ -17,6 +23,7 @@ class CartItem(models.Model):
         return self.product.name
     
 class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     STATUS_CHOICE = (
         ('PENDING', 'Pending'),
         ('CONFIRMED', 'Confirmed'),
@@ -27,7 +34,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"Order {self.id}"
+        return f"Order {self.id} - {self.user}"
 
 
 
