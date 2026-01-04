@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getToken } from "../utils/auth";
+import { apiFetch } from "../utils/api";
 
 const ProductDetail = ({ refreshCart }) => {
   const { id } = useParams();
@@ -37,12 +37,12 @@ const ProductDetail = ({ refreshCart }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
 
           {/* Image */}
-          <div className="bg-gradient-to-br from-teal-50 to-emerald-50 
+          <div className="bg-linear-to-br from-teal-50 to-emerald-50 
                           rounded-2xl p-6 flex items-center justify-center">
             <img
               src={product.image_url || "https://via.placeholder.com/400"}
               alt={product.name}
-              className="max-h-[420px] object-contain 
+              className="max-h-105 object-contain 
                          hover:scale-105 transition"
             />
           </div>
@@ -80,18 +80,18 @@ const ProductDetail = ({ refreshCart }) => {
             <div className="flex gap-4 mt-auto">
 
               <button
-                onClick={() => {
-                  fetch("http://127.0.0.1:8000/api/cart/add/", {
+                onClick={async () => {
+                  const res = await apiFetch("/api/cart/add/", {
                     method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                      Authorization: `Bearer ${getToken()}`,
-                    },
                     body: JSON.stringify({ product_id: product.id }),
-                  }).then(() => {
-                    refreshCart();
-                    alert("Added to cart");
                   });
+                  if (!res || !res.ok) {
+                    alert("Please login again");
+                    // navigate('/login')
+                    return;
+                  }
+                  refreshCart();
+                  alert("Added to cart");
                 }}
                 className="flex-1 bg-linear-to-r from-emerald-500 to-teal-600 
                            text-white py-3 rounded-xl font-semibold 

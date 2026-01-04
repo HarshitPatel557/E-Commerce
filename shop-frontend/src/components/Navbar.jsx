@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { removeToken, isAuthenticated } from "../utils/auth";
+import { isAuthenticated, logout } from "../utils/auth";
 
 
 const Navbar = ({cartCount}) => {
@@ -133,7 +133,7 @@ const Navbar = ({cartCount}) => {
 
         <button
           onClick={() => {
-            removeToken();
+            logout();
             window.location.href = "/login";
           }}
           className="bg-linear-to-r from-pink-200 to-red-100 

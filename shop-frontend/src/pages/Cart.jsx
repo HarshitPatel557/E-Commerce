@@ -1,38 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { getToken } from '../utils/auth';
+import { apiFetch } from '../utils/api';
 
 const Cart = ({cart, refreshCart, total}) => {
 
-  useEffect(()=>{
-      refreshCart();
-  },[]);
+  useEffect(() => {
+    refreshCart();
+  }, []);
 
-  const updateQuantity=(item_id,quantity)=>{
+  const updateQuantity = async (item_id, quantity) => {
     if (quantity > 0) {
-      // Normal quantity update
-      fetch("http://127.0.0.1:8000/api/cart/update/", {
+      // Update quantity
+      await apiFetch("/api/cart/update/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify({ item_id, quantity })
-      }).then(refreshCart);
+        body: JSON.stringify({ item_id, quantity }),
+      });
 
     } else {
-      // Remove item from cart
-      fetch(`http://127.0.0.1:8000/api/cart/delete/`, {
+      // Remove item
+      await apiFetch("/api/cart/delete/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify({ item_id })
-      }).then(()=>{
-        // fetchCart();
-        refreshCart();
+        body: JSON.stringify({ item_id }),
       });
     }
+
+    refreshCart();
   };
 
   

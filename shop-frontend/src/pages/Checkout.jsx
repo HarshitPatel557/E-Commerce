@@ -1,23 +1,24 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getToken } from '../utils/auth';
+import { apiFetch } from '../utils/api';
 
 const Checkout = ({total}) => {
 
   const navigate = useNavigate();
 
-  const placeOrder=()=>{
-    fetch("http://127.0.0.1:8000/api/checkout/",{
-        method:"POST",
-        headers: { 
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-    }).then(res=>res.json())
-      .then(data=>{
-        alert("Order placed Successfully!");
-        navigate(`/order-success/${data.order_id}`);
-      });
+  const placeOrder = async () => {
+    const res = await apiFetch("/api/checkout/", {
+      method: "POST",
+    });
+
+    if (!res || !res.ok) {
+      alert("Session expired. Please login again.");
+      return;
+    }
+
+    const data = await res.json();
+    alert("Order placed Successfully!");
+    navigate(`/order-success/${data.order_id}`);
   };
 
   return (

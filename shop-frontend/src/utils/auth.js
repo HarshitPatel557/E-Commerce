@@ -1,15 +1,36 @@
-export const getToken = () => {
+// Access token
+export const getAccessToken = () => {
   return localStorage.getItem("accessToken");
 };
 
-export const setToken = (token) => {
+export const setAccessToken = (token) => {
   localStorage.setItem("accessToken", token);
 };
 
-export const removeToken = () => {
+export const removeAccessToken = () => {
   localStorage.removeItem("accessToken");
 };
 
+// Refresh token
+export const getRefreshToken = () => {
+  return localStorage.getItem("refreshToken");
+};
+
+export const setRefreshToken = (token) => {
+  localStorage.setItem("refreshToken", token);
+};
+
+export const removeRefreshToken = () => {
+  localStorage.removeItem("refreshToken");
+};
+
+// Auth check
 export const isAuthenticated = () => {
-  return !!getToken();
+  return !!getAccessToken();
+};
+
+// Logout helper
+export const logout = () => {
+  removeAccessToken();
+  removeRefreshToken();
 };

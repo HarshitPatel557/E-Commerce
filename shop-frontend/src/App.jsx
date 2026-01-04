@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react';
 import { OrbitProgress } from "react-loading-indicators";
 import Login from "./pages/Login";
 import PrivateRoute from "./components/PrivateRoute";
-import { getToken, removeToken } from "./utils/auth";
+import { apiFetch } from "./utils/api";
+import { getAccessToken } from "./utils/auth";
 import Footer from './components/Footer';
 import Register from './pages/Register';
 import Profile from "./pages/Profile";
@@ -22,32 +23,34 @@ function App() {
   const [cartCount,setCartCount] = useState(0);
   const [cart,setCart] = useState(null);
 
-  const fetchCartCount=()=>{
-    const token = getToken();
+  const fetchCartCount = async () => {
+    const token = getAccessToken();
+
+    // User not logged in
     if (!token) {
       setCartCount(0);
-      setCart({ items: [] });  // prevent undefined error
+      setCart({ items: [] });
       return;
     }
 
-    fetch("http://127.0.0.1:8000/api/cart/",{
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    })
-      .then(res=>res.json())
-      .then(data=>{
-        setCartCount(data.items.length)
-        setCart(data)
-      });
+    const res = await apiFetch("/api/cart/");
+
+    if (!res || !res.ok) {
+      setCartCount(0);
+      setCart({ items: [] });
+      return;
+    }
+
+    const data = await res.json();
+    setCartCount(data.items.length);
+    setCart(data);
   };
 
-  
-  useEffect(()=>{
+  useEffect(() => {
     fetchCartCount();
-  },[])
+  }, []);
 
-
+  
   if (!cart) {
   return (
     <div className="flex justify-center mt-10">

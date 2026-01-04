@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setToken } from "../utils/auth";
+import { setAccessToken,setRefreshToken } from "../utils/auth";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -17,13 +17,15 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.access) {
-          setToken(data.access);
+        if (data.access && data.refresh) {
+          setAccessToken(data.access);
+          setRefreshToken(data.refresh);
           navigate("/");
         } else {
           alert("Invalid credentials");
         }
       });
+
   };
 
   return (

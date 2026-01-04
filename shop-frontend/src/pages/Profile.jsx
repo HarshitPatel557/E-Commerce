@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-import { getToken } from "../utils/auth";
+import { apiFetch } from "../utils/api";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/auth/profile/", {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    })
-      .then(res => res.json())
-      .then(data => setUser(data));
-  }, []);
+    const loadProfile = async () => {
+        const res = await apiFetch("/api/auth/profile/");
+        if (res.ok) {
+        const data = await res.json();
+        setUser(data);
+        }
+    };
+    loadProfile();
+    }, []);
 
   if (!user) return <p>Loading profile...</p>;
 
