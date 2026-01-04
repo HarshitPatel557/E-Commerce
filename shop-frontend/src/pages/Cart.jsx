@@ -14,7 +14,6 @@ const Cart = ({cart, refreshCart, total}) => {
         method: "POST",
         body: JSON.stringify({ item_id, quantity }),
       });
-
     } else {
       // Remove item
       await apiFetch("/api/cart/delete/", {

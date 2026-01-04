@@ -6,11 +6,11 @@ const Profile = () => {
 
   useEffect(() => {
     const loadProfile = async () => {
-        const res = await apiFetch("/api/auth/profile/");
-        if (res.ok) {
+      const res = await apiFetch("/api/auth/profile/");
+      if (res.ok) {
         const data = await res.json();
         setUser(data);
-        }
+      }
     };
     loadProfile();
     }, []);
