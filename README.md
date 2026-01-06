@@ -1,4 +1,3 @@
-
 # 🛒 Full E-Commerce Website
 
 ### **Roadmap • Architecture • Database Schema • API Design • Deployment Guide**
