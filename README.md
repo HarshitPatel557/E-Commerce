@@ -52,20 +52,18 @@ This project includes a comprehensive roadmap, fully documented folder structure
 ## 🧱 Project Structure
 
 ```
-/backend
+/ShopCircle
     /src
         /users
         /products
         /orders
         /payments
         /core
-    /tests
-/frontend
+/shop-frontend
     /src
         /components
         /pages
         /api
-        /hooks
     /public
 /infrastructure
     Dockerfile
