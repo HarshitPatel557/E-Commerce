@@ -57,7 +57,7 @@ function App() {
 
   useEffect(() => {
     fetchCartCount();
-  }, [cart]);
+  }, []);
 
   // if cart not present loading...
   if (!cart) {
