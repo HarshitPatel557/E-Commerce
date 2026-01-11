@@ -173,6 +173,7 @@ npm test frontend
 ```
 
 ---
+
 This project demonstrates:
 
 * Full-stack architecture
