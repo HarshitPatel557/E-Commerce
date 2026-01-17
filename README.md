@@ -184,4 +184,3 @@ This project demonstrates:
 * Frontend component architecture
 * Secure authentication flows
 * End-to-end system design
-
