@@ -5,7 +5,9 @@
 A complete, modern e-commerce web application designed with clean architecture, scalable backend APIs, secure payments, and a professional front-end.
 This project includes a comprehensive roadmap, fully documented folder structure, database schema, API design, deployment notes, and a recruiter-friendly overview.
 
+
 ---
+
 
 ## 🚀 Features-
 
