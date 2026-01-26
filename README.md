@@ -75,6 +75,7 @@ README.md
 ```
 ---
 
+
 ## 🗂️ Database Schema (High-Level)
 
 ### **Users**
